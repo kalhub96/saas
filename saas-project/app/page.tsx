@@ -1,7 +1,7 @@
+import Link from "next/link";
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center px-6">
-
+    <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center px-6 ">
       <section className="max-w-2xl text-center">
         <h1 className="text-4xl font-semibold text-slate-900">Build, Manage, and scale your workflow in one platform</h1>
 
@@ -28,4 +28,5 @@ export default function HomePage() {
       </section>
     </main>
   );
+
 }
