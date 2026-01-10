@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 export default function Navbar() {
     return (
         <nav className="text-slate-900 bg-slate-50 flex justify-between items-center px-6 py-4 ">
