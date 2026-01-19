@@ -4,11 +4,14 @@ import { useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { handleClientScriptLoad } from "next/script";
+import { login } from "./actions"
 
 
 console.log("Supabase URL Check:", process.env.NEXT_PUBLIC_SUPABASE_URL);
 
 export default function Login() {
+  
     const router = useRouter();
 
 
@@ -17,6 +20,13 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  async function handleSubmit(formData: FormData) {
+    await login(
+      formData.get("identifier") as string,
+      formData.get("password") as string
+    );
+  }
 
   const signIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,10 +45,11 @@ export default function Login() {
     // ✅ successful login
     router.push("/main");
   };
+  
 
   return (
     <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center px-6">
-      <form
+      <form action={handleSubmit}
         onSubmit={signIn}
         className="max-w-md w-full bg-white p-8 rounded-lg shadow"
       >
@@ -47,8 +58,9 @@ export default function Login() {
         </h2>
 
         <input
-          type="email"
-          placeholder="Email"
+          name="identifier"
+          type="email or name"
+          placeholder="Email or Username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -56,6 +68,7 @@ export default function Login() {
         />
 
         <input
+          name="password"
           type="password"
           placeholder="Password"
           value={password}
